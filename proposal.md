@@ -38,3 +38,17 @@ Make Up For Ever’s Ultra HD Foundation Only*; *2: US Best Sellers*; *3:
 BIPOC-recommended Brands with BIPOC Founders*; *4: BIPOC-recommended
 Brands with White Founders*; *5: Nigerian Best Sellers*; *6: Japanese
 Best Sellers*; *7: Indian Best Sellers*).
+
+# Section 3: Research questions and usage scenarios
+
+Our project answers the broad research question of: “What is the range
+and distribution of makeup foundations shades offered by each of the
+best-selling cosmetic brands across the globe”. Our broad research
+question can be further split into the 3 sub-questions specified below:
+
+  - RQ1. What shades do best-selling foundation products of each country
+    offer?  
+  - RQ2. What brands are part of the best-selling foundation products in
+    each country?
+  - RQ3. What is the distribution of foundation shades offered by the
+    best-selling brands in each country?

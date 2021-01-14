@@ -16,3 +16,15 @@ To address this objective, we propose building a data visualization dashboard th
 # Section 2: Description of the [data](https://github.com/the-pudding/data/tree/master/makeup-shades)
 
 We will be visualizing a dataset of 625 observations. Each observation has 8 associated relevant variables that describe a particular foundation `product` from a particular `brand` with a particular shade (represented as `hex` which stands for *hexadecimal color code* in the dataset), which has associated hue `H`, saturation `S`, brightness `V`, and lightness `L` numerical values, and has associated product `group` (of 7 categories - *0: Fenty Beauty's PRO FILT'R Foundation Only*; *1: Make Up For Ever's Ultra HD Foundation Only*; *2: US Best Sellers*; *3: BIPOC-recommended Brands with BIPOC Founders*; *4: BIPOC-recommended Brands with White Founders*; *5: Nigerian Best Sellers*; *6: Japanese Best Sellers*; *7: Indian Best Sellers*).    
+
+# Section 3: Research questions and usage scenarios
+
+Our project answers the broad research question of: "What is the range and distribution of makeup foundations shades offered by each of the best-selling cosmetics brands across the globe". Our broad research question can be further split into the 3 sub-questions specified below: 
+
+- RQ1. What shades do best-selling foundation products of each country offer?   
+- RQ2. What brands are part of the best-selling foundation products in each country?
+- RQ3. What is the distribution of foundation shades offered by the best-selling brands in each country?
+
+Below we have provided a usage scenario of our dashboard by a member of our intended target audience:
+
+
