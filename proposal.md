@@ -4,31 +4,23 @@ around the world
 
 # Section 1: Motivation and Purpose
 
-**Our role**: data scientist consultancy firm
+**Our role**: Data scientist consultancy firm
 
-**Target audience**:
-
-  - Women who are interested in makeup shades of foundation offered by
-    beauty brands; or
-  - Cosmetic companies who are interested in the makeup foundation
-    product competitive landscape; or
-  - Market Research companies who are interested in the makeup
-    foundation beauty market space; or
+**Target audience**: Global cosmetic marketing and consulting companies
 
 Makeup foundation usually comes in many different shades, contributed by
 factors such as hue, saturation, brightness, and lightness levels. Each
 beauty brand also has its own distribution of makeup foundation products
 that have the different shades to meet customer demands. If we could
 understand which beauty brands and their foundation products that meet
-the specific shades requirements, it could be helpful for ***women or
-cosmetic companies or market research companies*** to make informed
-decisions.
+the specific shades requirements, it could be helpful for cosmetic
+marketing and consulting companies to make informed decisions.
 
 To address this objective, we propose building a data visualization
 dashboard that allows our target audience to visually and interactively
-explore a dataset of makeup foundation product shades by different
-global beauty brands. Our dashboard will show the distribution of
-foundation products by shades and allow users to explore different
+explore a dataset of makeup foundation shades by different global beauty
+products from different brands. Our dashboard will show the distribution
+of foundation products by shades and allow users to explore different
 aspects of this data by filtering and re-ordering on different variables
 such as brands, hue, and saturation in order to compare factors that
 contribute to different foundation shades.
@@ -37,7 +29,7 @@ contribute to different foundation shades.
 
 We will be visualizing a dataset of 625 observations. Each observation
 has 8 associated relevant variables that describe a particular
-foundation `product` under a particular `brand` with a particular shade
+foundation `product` from a particular `brand` with a particular shade
 (represented as `hex` which stands for *hexadecimal color code* in the
 dataset), which has associated hue `H`, saturation `S`, brightness `V`,
 and lightness `L` numerical values, and has associated product `group`
