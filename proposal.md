@@ -61,9 +61,9 @@ consulting company. As part of her job, Beth advises large cosmetics
 companies on new product launches and strategies needed for entering new
 international markets.
 
-Beth is working closely with a client who is planning the launch a
+Beth is working closely with a client who is planning the launch of a
 makeup foundation product across the globe. Beth needs to understand her
-client’s competitors across the globe. She also need to understand what
+client’s competitors across the globe. She also needs to understand what
 shades of foundation products her client’s competitors are offering as
 well as the distribution of shades they are offering in each of the
 global markets. This would allow Beth to advise her clients to design a
