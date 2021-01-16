@@ -26,17 +26,14 @@ contribute to different foundation shades.
 
 # Section 2: Description of the [data](https://github.com/the-pudding/data/tree/master/makeup-shades)
 
-We will be visualizing a dataset of 625 observations. Each observation
+We will be visualizing a dataset of 349 observations. Each observation
 has 8 associated relevant variables that describe a particular
-foundation `product` from a particular `brand` with a particular shade
-(represented as `hex` which stands for *hexadecimal color code* in the
-dataset), which has associated hue `H`, saturation `S`, brightness `V`,
-and lightness `L` numerical values, and has associated product `group`
-(of 7 categories - *0: Fenty Beauty’s PRO FILT’R Foundation Only*; *1:
-Make Up For Ever’s Ultra HD Foundation Only*; *2: US Best Sellers*; *3:
-BIPOC-recommended Brands with BIPOC Founders*; *4: BIPOC-recommended
-Brands with White Founders*; *5: Nigerian Best Sellers*; *6: Japanese
-Best Sellers*; *7: Indian Best Sellers*).
+foundation `product` from a particular `brand` (26 categories of our
+interest) with a particular shade (represented as *lightness* `L` in the
+dataset), which has associated *hue* `H`, *saturation* `S`, and
+*brightness* `V` numerical values, and has associated product `group` (4
+categories of our interest - *2: US Best Sellers*; *5: Nigerian Best
+Sellers*; *6: Japanese Best Sellers*; *7: Indian Best Sellers*).
 
 # Section 3: Research questions and usage scenarios
 
