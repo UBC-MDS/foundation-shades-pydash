@@ -1,5 +1,5 @@
 ---
-title: "Proposal: shades of foundation offered by a variety of beauty brands around the world"
+title: "Proposal: Foundation Shades Across the Globe"
 output: github_document
 ---
 
@@ -16,3 +16,21 @@ To address this objective, we propose building a data visualization dashboard th
 # Section 2: Description of the [data](https://github.com/the-pudding/data/tree/master/makeup-shades)
 
 We will be visualizing a dataset of 625 observations. Each observation has 8 associated relevant variables that describe a particular foundation `product` from a particular `brand` with a particular shade (represented as `hex` which stands for *hexadecimal color code* in the dataset), which has associated hue `H`, saturation `S`, brightness `V`, and lightness `L` numerical values, and has associated product `group` (of 7 categories - *0: Fenty Beauty's PRO FILT'R Foundation Only*; *1: Make Up For Ever's Ultra HD Foundation Only*; *2: US Best Sellers*; *3: BIPOC-recommended Brands with BIPOC Founders*; *4: BIPOC-recommended Brands with White Founders*; *5: Nigerian Best Sellers*; *6: Japanese Best Sellers*; *7: Indian Best Sellers*).    
+
+# Section 3: Research questions and usage scenarios
+
+Our project answers the broad research question of: "What is the range and distribution of makeup foundations shades offered by each of the best-selling cosmetics brands across the globe". Our broad research question can be further split into the 3 sub-questions specified below: 
+
+- RQ1. What shades do best-selling foundation products of each country offer?   
+- RQ2. What brands are part of the best-selling foundation products in each country?
+- RQ3. What are the closest best-selling shades to a user-specified shade (specified by hue, saturation and brightness colour values)?
+
+Below we have provided a usage scenario of our product by a member of our intended target audience:
+
+Beth is a consultant at a well-known global cosmetics marketing and consulting company. As part of her job, Beth advises large cosmetics companies on new product launches and strategies needed for entering new international markets. 
+
+Beth is working closely with a client who is planning the launch of a makeup foundation product across the globe. Beth needs to understand her client’s competitors in different countries across the globe. She also need to understand the shades of foundation products that her client’s competitors are offering, and the distribution of shades they are offering in each of the global markets. This information would allow Beth to advise her clients to design a shade range that meets the needs of each of the markets they are entering and to stock their products for each market appropriately. Finally, Beth wants to discover how close the shades her client has designed is to other shades offered by her client's competitors.  
+
+When Beth uses the “Foundation Shades Across the Globe App”, she will see the distribution of shades offered by global best-selling foundations. Beth will be able to filter this dataset by specific regions (e.g. US, Japan, India or Nigeria). She also will be able to see the distribution of shades offered by global best-selling cosmetics brands (e.g. L’Oreal or Maybelline) and filter this dataset by the specific brand or the region in which the brand is offered. Finally, she is able to input the hue, saturation, and brightness values for each of the foundation shades that her client has designed to see what best-selling foundation products are most similar to her client's products.   
+
+With the insight gained from this app, Beth advises her clients to offer a wide range of shades in the US market as all her client’s competitors are offering 20+ shades in the US market. She also notices a market entry opportunity in India as most of her client’s competitors in India offer a limited shade range that is skewed towards lighter tones. She advises her clients to offer an expanded shade range in India and launch a culturally-sensitive yet progressive marketing campaign on embracing your natural skin tone by wearing an appropriately matched foundation shade. Finally, she notices that her client's proposed shade range for the upcoming launch is nearly identical to that of a long-time competitor. She advises her clients add some additional shades to avoid allegations of plagiarism. Beth's clients thank her and are impressed by her data-driven insights.
