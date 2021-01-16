@@ -10,6 +10,7 @@ from dash.dependencies import Input, Output, State
 app = dash.Dash(__name__)
 app.title = 'Foundation Shades Across the Globe'
 shades = pd.read_csv("./data/shades_processed.csv") # read processed data
+df = px.data.tips() # delete this next week
 unique_countries = shades.country.unique()
 server = app.server
 
@@ -32,7 +33,7 @@ app.layout = html.Div([
         ], 
         className="row"
     ),
-    # row 2: 2 histograms side by side
+    # row 2: 2 titles and control side by side
     html.Div(
         [
             html.Div(
@@ -59,6 +60,30 @@ app.layout = html.Div([
                 ],
                 className="five columns offset-by-half"
             )
+        ],
+        className="row"
+    ),
+    # row 3: 2 histograms side by side
+    html.Div(
+        [
+            html.Div(
+                [
+                    dcc.Graph(
+                        id='histogram_best_seller_by_country',
+                        figure=px.histogram(df, x="total_bill")
+                    )
+                ],
+                className="six columns"
+            ),
+            html.Div(
+                [
+                    dcc.Graph(
+                        id='histogram_best_seller_brand_by_country',
+                        figure = px.histogram(df, x="total_bill")
+                    )
+                ],
+                className="six columns"
+            ),
         ],
         className="row"
     )
