@@ -87,6 +87,72 @@ app.layout = html.Div([
         ],
         className="row"
     )
+    # row 4: 1 title and 1 dropdown control underneath
+    html.Div(
+        [
+            html.Div(
+                [
+                    html.H6('Finding the Top 5 Similar Foundations by HSV:'),
+                    dcc.Dropdown(
+                        id='dropdown_top_5_similar_foundation_by_countries',
+                        options=[{'label': country, 'value': country } for country in unique_countries],
+                        value=unique_countries,
+                        multi=True
+                    )
+                ],
+                className="six columns"
+            ),
+        ], 
+        className="row"
+    ),
+    # row 5: 3 titles and 3 sliders control underneath
+    html.Div(
+        [
+            html.Div(
+                [
+                    html.H6("Hue"),
+                    dcc.Slider(
+                        id='slider_hue', 
+                        min=0, max=360, step=1, 
+                        value=30,
+                        marks={ 0: '0°', 30: '30°' }
+                    )
+                ],
+                className="three columns"
+            ),
+            html.Div(
+                [
+                    html.H6("Saturation"),
+                    dcc.Slider(
+                        id='slider_saturation',
+                        min=0, max=1, step=0.1,
+                        value=0.5,
+                        marks={0: '0', 0.5: '0.5', 1: '1'}
+                    )
+                ],
+                className="three columns offset-by-half"
+            ),
+            html.Div(
+                [
+                    html.H6("Value/Brightness"),
+                    dcc.Slider(
+                        id='slider_value_brightness',
+                        min=0, max=1, step=0.1,
+                        value=0.5,
+                        marks={ 0: '0', 0.5: '0.5', 1: '1'}
+                    )
+                ],
+                className="three columns offset-by-half"
+            ),
+        ],
+        className="row"
+    ),
+    # row 6: 1 sub title
+    html.Div(
+        children='Most Matching Results:',
+        className='five columns',
+        style={'marginLeft': 0}
+    )
 ],
 className='ten columns offset-by-half')
 
