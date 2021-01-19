@@ -86,7 +86,7 @@ app.layout = html.Div([
             ),
         ],
         className="row"
-    )
+    ),
     # row 4: 1 title and 1 dropdown control underneath
     html.Div(
         [
@@ -115,10 +115,11 @@ app.layout = html.Div([
                         id='slider_hue', 
                         min=0, max=360, step=1, 
                         value=30,
-                        marks={ 0: '0°', 30: '30°' }
+                        marks={ 0: '0°', 30: '30°' },
                     )
                 ],
-                className="three columns"
+                className="three columns",
+                style={'paddingLeft': 0}
             ),
             html.Div(
                 [
@@ -130,7 +131,7 @@ app.layout = html.Div([
                         marks={0: '0', 0.5: '0.5', 1: '1'}
                     )
                 ],
-                className="three columns offset-by-half"
+                className="three columns"
             ),
             html.Div(
                 [
@@ -142,19 +143,32 @@ app.layout = html.Div([
                         marks={ 0: '0', 0.5: '0.5', 1: '1'}
                     )
                 ],
-                className="three columns offset-by-half"
+                className="three columns"
             ),
         ],
-        className="row"
+        className="row",
     ),
     # row 6: 1 sub title
     html.Div(
-        children='Most Matching Results:',
+        [
+            html.P(id='HSV_user_choice_output'),
+            html.H6("Most Matching Results:")
+        ],
         className='five columns',
-        style={'marginLeft': 0}
     )
 ],
 className='ten columns offset-by-half')
+
+# callback for displaying user selection
+@app.callback(
+    Output('HSV_user_choice_output', 'children'),
+    Input('slider_hue', 'value'),
+    Input('slider_saturation', 'value'),
+    Input('slider_value_brightness', 'value'))
+def display_user_HSV_option(H, S, V):
+    output_string = "You selected HSV value of H:" + \
+        str(H) + ", S: " + str(S) + ", and V: " + str(V)
+    return output_string
 
 if __name__ == '__main__':
     app.run_server(debug=True)
