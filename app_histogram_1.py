@@ -70,7 +70,7 @@ app.layout = html.Div([
                 [
                     dcc.Graph(
                         id='histogram_best_seller_by_country',
-                        figure=px.histogram(df, x="total_bill")
+                        #figure=px.histogram(df, x="total_bill")
                     )
                 ],
                 className="six columns"
@@ -89,6 +89,16 @@ app.layout = html.Div([
     )
 ],
 className='ten columns offset-by-half')
+
+@app.callback(
+    Output("histogram_best_seller_by_country", "figure"), 
+    [Input("dropdown_best_seller_shades_by_countries", "value")])
+    
+def country_filter(value):
+    if type(value) != list: value = [value]
+    data_filtered = shades.loc[shades['country'].isin(value)]
+    fig = px.histogram(data_filtered, x="L", color = "country", nbins=10, range_x=[0,100], range_y=[0,120])
+    return fig
 
 if __name__ == '__main__':
     app.run_server(debug=True)
