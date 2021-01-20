@@ -6,14 +6,21 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from dash.dependencies import Input, Output, State
+from math import sqrt
+import numpy as np
 
 # launch app with customer css
 app = dash.Dash(__name__)
 app.title = 'Foundation Shades Across the Globe'
 shades = pd.read_csv("./data/shades_processed.csv") # read processed data
-df = px.data.tips() # delete this next week
+shades['hex'] = '#' + shades['hex'] # add # symbol for displaying color
+df = px.data.tips()  # delete this next week
 unique_countries = shades.country.unique()
 server = app.server
+
+# function to calculate the distance between 2 points
+def distance(p1, p2):
+    return sqrt((p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2 + (p2[2] - p1[2]) ** 2)
 
 """
 Dashboard layout
@@ -153,12 +160,64 @@ app.layout = html.Div([
     # row 6: 1 sub title
     html.Div(
         [
-            html.P(id='HSV_user_choice_output'),
-            html.Div(id="user_selected_color_div"),
-            html.H6("Most Matching Results:")
+            html.Div(
+                [
+                    html.P(id='HSV_user_choice_output'),
+                    html.Div(id="user_selected_color_div"),
+                    html.H6("Most Matching Results:")
+                ],
+                className='six columns',
+            )
         ],
-        className='six columns',
-    )
+        className="row"
+    ),
+    # row 7: 5 top similar products
+    html.Br(),
+    html.Div(
+        [
+            html.Div(
+                [
+                    html.H1(id='match_1'),
+                    html.P(id='match_1_text')
+                ], 
+                className = "two columns"
+            ),
+            html.Div(
+                [
+                    html.H1(id='match_2',
+                        style = {'backgroundColor':'blue', 
+                                    "height": "150px", 
+                                    "width": "150px",
+                                    "borderRadius": "15px"},
+                        ),
+                    html.P(id='match_2_text')
+                ], 
+                className = "two columns"
+            ),
+            html.Div(
+                [
+                    html.H1(id='match_3'),
+                    html.P(id='match_3_text')
+                ], 
+                className = "two columns"
+            ),
+            html.Div(
+                [
+                    html.H1(id='match_4'),
+                    html.P(id='match_4_text')
+                ], 
+                className = "two columns"
+            ),
+            html.Div(
+                [
+                    html.H1(id='match_5'),
+                    html.P(id='match_5_text')
+                ], 
+                className = "two columns"
+            ),
+        ],
+        className="row"
+    ), 
 ],
 className='ten columns offset-by-half')
 
@@ -175,12 +234,54 @@ def display_user_HSV_option(H, S, V):
     output_string = "You selected HSV value of H:" + \
         str(H) + ", S: " + str(S) + ", and V: " + str(V) + \
         " (Hex code: " + hex_color + ")"
-    
+
     # style change for div
     style = {"backgroundColor": hex_color,
             "height": "50px", 
             "width": "100px"}
     return output_string, style
+
+# callback for displaying most simliar color names
+@app.callback(
+    Output('match_1_text', 'children'),
+    Output('match_2_text', 'children'),
+    Output('match_3_text', 'children'),
+    Output('match_4_text', 'children'),
+    Output('match_5_text', 'children'),
+    Input('slider_hue', 'value'),
+    Input('slider_saturation', 'value'),
+    Input('slider_value_brightness', 'value'))
+def display_similar_HSV_option(H, S, V):
+    # find matching color and output string for displaying user choice
+    user_color = np.array([H, S, V])
+    top_5_matches = shades.apply(lambda row : distance(row[["H", "S", "V"]], user_color), axis = 1).sort_values().index[:5]
+    top_5_matches_colors = shades.iloc[top_5_matches.values, 2:6]
+    most_similar_hex_colors = top_5_matches_colors["hex"].values.tolist()
+    return most_similar_hex_colors
+
+# callback for displaying most similar colors
+@app.callback(
+    Output('match_1', 'style'),
+    Output('match_2', 'style'),
+    Output('match_3', 'style'),
+    Output('match_4', 'style'),
+    Output('match_5', 'style'),
+    Input('slider_hue', 'value'),
+    Input('slider_saturation', 'value'),
+    Input('slider_value_brightness', 'value'))
+def display_similar_colors(H, S, V):
+    # find matching color and output string for displaying user choice
+    user_color = np.array([H, S, V])
+    top_5_matches = shades.apply(lambda row : distance(row[["H", "S", "V"]], user_color), axis = 1).sort_values().index[:5]
+    top_5_matches_colors = shades.iloc[top_5_matches.values, 2:6]
+    most_similar_hex_colors = top_5_matches_colors["hex"].values.tolist()
+    displayed_colors = []
+    for similar_color in most_similar_hex_colors:
+        displayed_colors.append({'backgroundColor': similar_color, 
+                                 "height": "150px", 
+                                 "width": "150px",
+                                 "borderRadius": "15px"})
+    return displayed_colors
 
 if __name__ == '__main__':
     app.run_server(debug=True)
