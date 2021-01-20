@@ -78,8 +78,9 @@ app.layout = html.Div([
             html.Div(
                 [
                     dcc.Graph(
-                        id='histogram_best_seller_brand_by_country',
-                        figure = px.histogram(df, x="total_bill")
+                        id='histogram_best_seller_brand_by_country'
+
+ #                       figure = px.histogram(df, x="total_bill")
                     )
                 ],
                 className="six columns"
@@ -90,5 +91,17 @@ app.layout = html.Div([
 ],
 className='ten columns offset-by-half')
 
+@app.callback(
+    Output('histogram_best_seller_brand_by_country', 'figure'),
+    Input('radio_button_best_selling_brand_by_country', 'value'))
+def update_histogram(value):
+    data = shades.query("country == @value").loc[:, ["brand", "L"]]
+    fig = px.histogram(data, x="L", range_x=[0,100], color="brand")
+    return fig
+
+
+#print(shades.query("country == 'US'").loc[:, ["brand", "L"]])
+
 if __name__ == '__main__':
     app.run_server(debug=True)
+
