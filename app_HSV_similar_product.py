@@ -1,18 +1,19 @@
-from colorutils import Color 
+# -*- coding: utf-8 -*-
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from dash.dependencies import Input, Output, State
-from math import sqrt
 import numpy as np
+import pandas as pd
+from math import sqrt
+from colorutils import Color 
 
 # launch app with customer css
 app = dash.Dash(__name__)
 app.title = 'Foundation Shades Across the Globe'
-shades = pd.read_csv("./data/shades_processed.csv") # read processed data
+shades = pd.read_csv("./data/shades_processed.csv", encoding="utf-8-sig") # read processed data
 shades['hex'] = '#' + shades['hex'] # add # symbol for displaying color
 df = px.data.tips()  # delete this next week
 unique_countries = shades.country.unique()
@@ -118,7 +119,7 @@ app.layout = html.Div([
         [
             html.Div(
                 [
-                    html.H6("Hue"),
+                    html.H6("Hue (Color Spectrum)"),
                     dcc.Slider(
                         id='slider_hue', 
                         min=0, max=50, step=1, 
@@ -131,25 +132,25 @@ app.layout = html.Div([
             ),
             html.Div(
                 [
-                    html.H6("Saturation"),
+                    html.H6("Saturation (Color Intensity)"),
                     dcc.Slider(
                         id='slider_saturation',
-                        min=0, max=1, step=0.01,
-                        value=0.53,
-                        marks={0: '0', 0.2: '0.2', 0.4: '0.4', 
-                               0.6: '0.6', 0.8: '0.8', 1: '1'}
+                        min=0, max=100, step=1,
+                        value=53,
+                        marks={0: '0%', 20: '20%', 40: '40%', 
+                               60: '60%', 80: '80%', 100: '100%'}
                     )
                 ],
                 className="three columns"
             ),
             html.Div(
                 [
-                    html.H6("Value/Brightness"),
+                    html.H6("Value (Color Brightness)"),
                     dcc.Slider(
                         id='slider_value_brightness',
-                        min=0.2, max=1, step=0.01,
-                        value=0.7,
-                        marks={ 0.2: '0.2', 0.6: '0.6', 1: '1'}
+                        min=20, max=100, step=1,
+                        value=70,
+                        marks={ 20: '20%', 60: '60%', 100: '100%'}
                     )
                 ],
                 className="three columns"
@@ -164,7 +165,7 @@ app.layout = html.Div([
                 [
                     html.P(id='HSV_user_choice_output'),
                     html.Div(id="user_selected_color_div"),
-                    html.H6("Most Matching Results:")
+                    html.H6("Most Matching Results from Best Selling Foundation Lists:")
                 ],
                 className='six columns',
             )
@@ -178,42 +179,42 @@ app.layout = html.Div([
             html.Div(
                 [
                     html.H1(id='match_1'),
+                    html.P(id='match_1_color'),
                     html.P(id='match_1_text')
                 ], 
                 className = "two columns"
             ),
             html.Div(
                 [
-                    html.H1(id='match_2',
-                        style = {'backgroundColor':'blue', 
-                                    "height": "150px", 
-                                    "width": "150px",
-                                    "borderRadius": "15px"},
-                        ),
+                    html.H1(id='match_2'),
+                    html.P(id='match_2_color'),
                     html.P(id='match_2_text')
                 ], 
-                className = "two columns"
+                className = "two columns offset-by-half"
             ),
             html.Div(
                 [
                     html.H1(id='match_3'),
+                    html.P(id='match_3_color'),
                     html.P(id='match_3_text')
                 ], 
-                className = "two columns"
+                className = "two columns offset-by-half"
             ),
             html.Div(
                 [
                     html.H1(id='match_4'),
+                    html.P(id='match_4_color'),
                     html.P(id='match_4_text')
                 ], 
-                className = "two columns"
+                className = "two columns offset-by-half"
             ),
             html.Div(
                 [
                     html.H1(id='match_5'),
+                    html.P(id='match_5_color'),
                     html.P(id='match_5_text')
                 ], 
-                className = "two columns"
+                className = "two columns offset-by-half"
             ),
         ],
         className="row"
@@ -230,7 +231,7 @@ className='ten columns offset-by-half')
     Input('slider_value_brightness', 'value'))
 def display_user_HSV_option(H, S, V):
     # output string for displaying user choice
-    hex_color = Color(hsv=(H, S, V)).hex
+    hex_color = Color(hsv=(H, S/100, V/100)).hex
     output_string = "You selected HSV value of H:" + \
         str(H) + ", S: " + str(S) + ", and V: " + str(V) + \
         " (Hex code: " + hex_color + ")"
@@ -241,8 +242,21 @@ def display_user_HSV_option(H, S, V):
             "width": "100px"}
     return output_string, style
 
+# combine product results for the color value matching
+def combine_brand_product_results(row):
+    return '{}, {}'.format(row["brand"], row["product"])
+
+# combine the color results for color vlaue matching
+def combine_color_country_results(row):
+    return '{}, {}'.format(row["hex"], row["country"])
+
 # callback for displaying most simliar color names
 @app.callback(
+    Output('match_1_color', 'children'),
+    Output('match_2_color', 'children'),
+    Output('match_3_color', 'children'),
+    Output('match_4_color', 'children'),
+    Output('match_5_color', 'children'),
     Output('match_1_text', 'children'),
     Output('match_2_text', 'children'),
     Output('match_3_text', 'children'),
@@ -255,9 +269,10 @@ def display_similar_HSV_option(H, S, V):
     # find matching color and output string for displaying user choice
     user_color = np.array([H, S, V])
     top_5_matches = shades.apply(lambda row : distance(row[["H", "S", "V"]], user_color), axis = 1).sort_values().index[:5]
-    top_5_matches_colors = shades.iloc[top_5_matches.values, 2:6]
-    most_similar_hex_colors = top_5_matches_colors["hex"].values.tolist()
-    return most_similar_hex_colors
+    top_5_matches_colors = shades.iloc[top_5_matches.values, :]
+    most_similar_hex_colors =top_5_matches_colors.apply(combine_color_country_results, axis=1).values.tolist()
+    most_similar_hex_texts = top_5_matches_colors.apply(combine_brand_product_results, axis=1).values.tolist()
+    return most_similar_hex_colors + most_similar_hex_texts
 
 # callback for displaying most similar colors
 @app.callback(
@@ -272,7 +287,8 @@ def display_similar_HSV_option(H, S, V):
 def display_similar_colors(H, S, V):
     # find matching color and output string for displaying user choice
     user_color = np.array([H, S, V])
-    top_5_matches = shades.apply(lambda row : distance(row[["H", "S", "V"]], user_color), axis = 1).sort_values().index[:5]
+    top_5_matches = shades.apply(lambda row : distance(row[["H", "S", "V"]], 
+                                              user_color), axis = 1).sort_values().index[:5]
     top_5_matches_colors = shades.iloc[top_5_matches.values, 2:6]
     most_similar_hex_colors = top_5_matches_colors["hex"].values.tolist()
     displayed_colors = []
