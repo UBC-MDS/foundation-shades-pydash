@@ -101,13 +101,7 @@ app.layout = html.Div([
         [
             html.Div(
                 [
-                    html.H6('Finding the Top 5 Similar Foundations by HSV:'),
-                    dcc.Dropdown(
-                        id='dropdown_top_5_similar_foundation_by_countries',
-                        options=[{'label': country, 'value': country } for country in unique_countries],
-                        value=unique_countries,
-                        multi=True
-                    )
+                    html.H5('Finding the Top 5 Similar Foundations by HSV:'),
                 ],
                 className="six columns"
             ),
