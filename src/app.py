@@ -43,7 +43,7 @@ app.layout = html.Div([
         [
             html.Div(
                 [
-                    html.H6('Best Seller Shades by Countries:'),
+                    html.H6('Best Seller Shades by Country:'),
                     dcc.Dropdown(
                             id = 'dropdown_best_seller_shades_by_countries',
                             options = [{'label': country, 'value': country} for country in unique_countries],
@@ -55,7 +55,7 @@ app.layout = html.Div([
             ),
             html.Div(
                 [
-                    html.H6('Best-selling brands by country:'),
+                    html.H6('Best Selling Brands by Country:'),
                     dcc.RadioItems(
                         id = 'radio_button_best_selling_brand_by_country',
                         options = [{'label': country, 'value': country} for country in unique_countries],
@@ -213,7 +213,7 @@ className='ten columns offset-by-half')
 def country_filter(value):
     if type(value) != list: value = [value]
     data_filtered = shades.loc[shades['country'].isin(value)]
-    fig = px.histogram(data_filtered, x="L", color = "country", range_x=[0,100])
+    fig = px.histogram(data_filtered, x="Lightness", color = "country", range_x=[0,100])
     return fig
 
 # update histogram best seller selection by brand
@@ -221,8 +221,8 @@ def country_filter(value):
     Output('histogram_best_seller_brand_by_country', 'figure'),
     Input('radio_button_best_selling_brand_by_country', 'value'))
 def update_histogram(value):
-    data = shades.query("country == @value").loc[:, ["brand", "L"]]
-    fig = px.histogram(data, x="L", range_x=[0,100], color="brand")
+    data = shades.query("country == @value").loc[:, ["brand", "Lightness"]]
+    fig = px.histogram(data, x="Lightness", range_x=[0,100], color="brand")
     return fig
 
 # callback for displaying user selection

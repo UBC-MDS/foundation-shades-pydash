@@ -7,3 +7,12 @@ This interactive app consists of visualization charts (histograms and color card
 
 ## Sketch 
 ![Dashboad Sketch Design](dashboard_sketch.jpg)
+
+## Implementation and Usage Guide
+1. Single or double click legend to filter categories:
+
+
+2. Use your mouse to select regions:
+
+
+3. USe foundation HSV value slider to find matching products by color:
