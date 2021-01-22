@@ -9,10 +9,14 @@ This interactive app consists of visualization charts (histograms and color card
 ![Dashboad Sketch Design](dashboard_sketch.jpg)
 
 ## Implementation and Usage Guide
-1. Single or double click legend to filter categories:
+1. Single or double click legend to filter categories:  
+![Select Legend Categories](./data/gif_tutorials/select_legend_categories.gif)
 
+2. Use your mouse to select regions:  
+![Select Region With Mouse](./data/gif_tutorials/select_region_with_mouse.gif)
 
-2. Use your mouse to select regions:
+3. Use foundation HSV value slider to find matching products by color:  
+![Select Color By HSV](./data/gif_tutorials/select_color_by_HSV.gif)
 
-
-3. USe foundation HSV value slider to find matching products by color:
+4. Filter Foundation Lightness Histograms by Country:  
+![Filter by Country](./data/gif_tutorials/filter_by_country.gif)
