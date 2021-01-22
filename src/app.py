@@ -13,7 +13,7 @@ from colorutils import Color
 # launch app with customer css
 app = dash.Dash(__name__)
 app.title = 'Foundation Shades Across the Globe'
-shades = pd.read_csv("./data/shades_processed.csv", encoding="utf-8-sig") # read processed data
+shades = pd.read_csv("./data/processed/shades_processed.csv", encoding="utf-8-sig") # read processed data
 shades['hex'] = '#' + shades['hex'] # add # symbol for displaying color
 df = px.data.tips()  # delete this next week
 unique_countries = shades.country.unique()
