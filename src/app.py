@@ -13,15 +13,11 @@ from colorutils import Color
 # launch app with customer css
 app = dash.Dash(__name__)
 app.title = 'Foundation Shades Across the Globe'
-shades = pd.read_csv("./data/shades_processed.csv", encoding="utf-8-sig") # read processed data
+shades = pd.read_csv("./data/processed/shades_processed.csv", encoding="utf-8-sig") # read processed data
 shades['hex'] = '#' + shades['hex'] # add # symbol for displaying color
 df = px.data.tips()  # delete this next week
 unique_countries = shades.country.unique()
 server = app.server
-
-# function to calculate the distance between 2 points
-def distance(p1, p2):
-    return sqrt((p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2 + (p2[2] - p1[2]) ** 2)
 
 """
 Dashboard layout
@@ -47,7 +43,7 @@ app.layout = html.Div([
         [
             html.Div(
                 [
-                    html.H6('Best Seller Shades by Countries:'),
+                    html.H6('Best Seller Shades by Country:'),
                     dcc.Dropdown(
                             id = 'dropdown_best_seller_shades_by_countries',
                             options = [{'label': country, 'value': country} for country in unique_countries],
@@ -59,7 +55,7 @@ app.layout = html.Div([
             ),
             html.Div(
                 [
-                    html.H6('Best-selling brands by country:'),
+                    html.H6('Best Selling Brands by Country:'),
                     dcc.RadioItems(
                         id = 'radio_button_best_selling_brand_by_country',
                         options = [{'label': country, 'value': country} for country in unique_countries],
@@ -77,19 +73,13 @@ app.layout = html.Div([
         [
             html.Div(
                 [
-                    dcc.Graph(
-                        id='histogram_best_seller_by_country',
-                        figure=px.histogram(df, x="total_bill")
-                    )
+                    dcc.Graph(id='histogram_best_seller_by_country')
                 ],
                 className="six columns"
             ),
             html.Div(
                 [
-                    dcc.Graph(
-                        id='histogram_best_seller_brand_by_country',
-                        figure = px.histogram(df, x="total_bill")
-                    )
+                    dcc.Graph(id='histogram_best_seller_brand_by_country')
                 ],
                 className="six columns"
             ),
@@ -212,9 +202,28 @@ app.layout = html.Div([
             ),
         ],
         className="row"
-    ), 
+    ),
 ],
 className='ten columns offset-by-half')
+
+# update best seller by country histogram countries
+@app.callback(
+    Output("histogram_best_seller_by_country", "figure"), 
+    [Input("dropdown_best_seller_shades_by_countries", "value")])
+def country_filter(value):
+    if type(value) != list: value = [value]
+    data_filtered = shades.loc[shades['country'].isin(value)]
+    fig = px.histogram(data_filtered, x="Lightness", color = "country", range_x=[0,100])
+    return fig
+
+# update histogram best seller selection by brand
+@app.callback(
+    Output('histogram_best_seller_brand_by_country', 'figure'),
+    Input('radio_button_best_selling_brand_by_country', 'value'))
+def update_histogram(value):
+    data = shades.query("country == @value").loc[:, ["brand", "Lightness"]]
+    fig = px.histogram(data, x="Lightness", range_x=[0,100], color="brand")
+    return fig
 
 # callback for displaying user selection
 @app.callback(
@@ -235,6 +244,10 @@ def display_user_HSV_option(H, S, V):
             "height": "50px", 
             "width": "100px"}
     return output_string, style
+
+# function to calculate the distance between 2 points
+def distance(p1, p2):
+    return sqrt((p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2 + (p2[2] - p1[2]) ** 2)
 
 # combine product results for the color value matching
 def combine_brand_product_results(row):
@@ -294,4 +307,4 @@ def display_similar_colors(H, S, V):
     return displayed_colors
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
