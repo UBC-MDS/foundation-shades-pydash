@@ -2,7 +2,7 @@
 
 ### 1. What we have implemented
 
-We have implemented all the 3 sections we promised to implement from Milestone 1, which are:
+We have implement all 3 sections outlined in our Milestone 1 proposal, which include:
 
 1. `Best Seller Shades by Country` histogram;
 
@@ -24,38 +24,36 @@ Our current dashboard has included all the basic functionalities that we planned
 
 * Interactive dropdown options for users to select multiple countries on the `Best Seller Shades by Country` histogram;
 
-* Interactive radio items options for users to select on individual country and different brands on the `Best Selling Brands by Country` histogram;
+* Interactive radio button for users to select an individual country and visualize different best-selling brands through the `Best Selling Brands by Country` histogram;
 
-* Interactive slider options for users to input their own unique and interested HSV values and see the top 5 most matching results from our `Best Selling Foundation Lists`.
+* Interactive sliders for users to input their own unique HSV values and see the top 5 most matching results from our `Best Selling Foundation Lists`.
 
 ### 4. What are the limitations
 
-The limitations include:
+The limitations of our dashboard include:
 
 * Relatively small dataset with limited brand categories:
   
-  * The current dataset we used to build our app has only 349 observations, which fall into 26 different brand categories across 4 different countries (US, Nigeria, Japan, and India).
+  * The dataset used to build our app has merely 349 observations, which fall into 26 different brand categories across 4 different countries (US, Nigeria, Japan, and India).
   
   * This means that our dataset by nature could not fully represent all the brands and products of foundations.
   
-  * In addition, when users are filtering by country such as Nigeria, the Lightness shades of foundation products presented might not be fully representative of the whole Nigeria foundation market.   
-  
-  * As a result, our foundation shades color spectrum is also not wide and representative enough of the population foundation products. 
+  * Additionally, when users are filtering by country (e.g. filtering by Nigeria), the distribution of Lightness presented may not be fully representative of the entire foundation market of a country.
   
 * Dash specific limitations:
 
-  * When we tried to display different foundation shades color on Dash, the color matching and displaying part was particularly hard to implement as Dash doesn't have a build-in function for that, so we have to implement this manually with functions from other imports and packages, which was very inconvenient, time-consuming, and hard to reproduce.
+  * When we tried to display different foundation shades/colours on Dash, the colour matching and displaying was particularly hard to implement. This is due to the fact that Dash doesn't have a built-in function support for displaying colours. We had to implement this feature manually with functions from other packages; which is inconvenient, time-consuming, and difficult to reproduce.
   
-  * It is very difficult to change style of the app sliders, in particular the padding space between the `Hue`, `Saturation`, and `Value` headers and the sliders underneath, which doesn't look the nicest.
+  * It is very difficult to change style of the app sliders, in particular the padding space between the `Hue`, `Saturation`, and `Value` headers and the sliders underneath. This detracts from the aesthetic pleasantness of our app.
 
 ### 5. What are potential improvements & additions
 
 If we had more time in the future, we have a couple of potential additions in mind:
 
-* We would like to try to include other cosmetic products, such as but not limited to lipstick colors, eyeshadow colors, in addition to our current foundation shades.
+* We would like to try to include other cosmetic products, including but not limited to lipstick colors, eyeshadow colors, in addition to our current foundation shades.
   
-  * That way, our app could become more useful, powerful, and dynamic for our target users (global cosmetic marketing and consulting companies) to get a fuller view on not just the foundation markets, but also other cosmetic product markets.
+  * With the addition of other cosmetic products, our app could become more useful, powerful, and dynamic for our target users (i.e. global cosmetic marketing and consulting companies). The additional makeup product would allow our target users to get a fuller view on the cosmetic products market as a whole.
   
   * Ideally, we would have toggles on the sidebar of the app for users to switch between different makeup products.
 
-* We would also like to use a rather large dataset for our current foundation shades task, with more foundation shades, brands, and countries available, so that we could build an app that is representative of the entire foundation markets, and not just a few segments.
+* We would also like to use a larger dataset of foundations, with data from more shades, brands, and countries. This would allow for our app to be more representative of the entire foundation market, and not just a segment of it.
