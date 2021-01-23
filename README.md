@@ -1,4 +1,6 @@
-# Foundation Shades Across the Globe App https://foundation-product-dashboard.herokuapp.com/
+# Foundation Shades Across the Globe App 
+
+-   App link: https://foundation-product-dashboard.herokuapp.com/
 
 -   Author: Ela Bandari, Ling (Elina) Lin, Kangbo Lu, Rachel Xu
 
