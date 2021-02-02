@@ -234,7 +234,7 @@ def country_filter(value):
     Input('radio_button_best_selling_brand_by_country', 'value'))
 def update_histogram(value):
     """ Filter dataset based on radio button value and return stacked histogram.
-    
+
     Parameters
     ----------
     value : str
@@ -257,6 +257,22 @@ def update_histogram(value):
     Input('slider_saturation', 'value'),
     Input('slider_value_brightness', 'value'))
 def display_user_HSV_option(H, S, V):
+    """Display the user-selected HSV value as a str.
+
+    Parameters
+    ----------
+    H : int
+        Hue value selected by user via slider component.
+    S : int
+        Saturation value selected by user via slider component.
+    V : int
+        Value/Brightness value selected by user via slider component.
+
+    Returns
+    -------
+    str
+        Output string displaying user's choice of HSV.
+    """
     # output string for displaying user choice
     hex_color = Color(hsv=(H, S/100, V/100)).hex
     output_string = "You selected HSV value of H:" + \
