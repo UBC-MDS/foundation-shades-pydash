@@ -211,6 +211,18 @@ className='ten columns offset-by-half')
     Output("histogram_best_seller_by_country", "figure"), 
     [Input("dropdown_best_seller_shades_by_countries", "value")])
 def country_filter(value):
+    """ Filter dataset based on dropdown values and return stacked histogram.
+
+    Parameters
+    ----------
+    value : str, list
+        Values selected from the dropdown.
+
+    Returns
+    -------
+    fig
+        A histogram displaying lightness for selected values.
+    """
     if type(value) != list: value = [value]
     data_filtered = shades.loc[shades['country'].isin(value)]
     fig = px.histogram(data_filtered, x="Lightness", color = "country", range_x=[0,100])
@@ -221,6 +233,18 @@ def country_filter(value):
     Output('histogram_best_seller_brand_by_country', 'figure'),
     Input('radio_button_best_selling_brand_by_country', 'value'))
 def update_histogram(value):
+    """ Filter dataset based on radio button value and return stacked histogram.
+
+    Parameters
+    ----------
+    value : str
+        Value (i.e. country) selected by the radio button.
+
+    Returns
+    -------
+    fig
+        A histogram displaying lightness distribution of brands for a particular country.
+    """
     data = shades.query("country == @value").loc[:, ["brand", "Lightness"]]
     fig = px.histogram(data, x="Lightness", range_x=[0,100], color="brand")
     return fig
@@ -233,6 +257,22 @@ def update_histogram(value):
     Input('slider_saturation', 'value'),
     Input('slider_value_brightness', 'value'))
 def display_user_HSV_option(H, S, V):
+    """Display the user-selected HSV value as a str.
+
+    Parameters
+    ----------
+    H : int
+        Hue value selected by user via slider component.
+    S : int
+        Saturation value selected by user via slider component.
+    V : int
+        Value/Brightness value selected by user via slider component.
+
+    Returns
+    -------
+    str
+        Output string displaying user's choice of HSV.
+    """
     # output string for displaying user choice
     hex_color = Color(hsv=(H, S/100, V/100)).hex
     output_string = "You selected HSV value of H:" + \
