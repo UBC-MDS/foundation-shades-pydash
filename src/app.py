@@ -234,6 +234,7 @@ def country_filter(value):
     Input('radio_button_best_selling_brand_by_country', 'value'))
 def update_histogram(value):
     """ Filter dataset based on radio button value and return stacked histogram.
+    
     Parameters
     ----------
     value : str
