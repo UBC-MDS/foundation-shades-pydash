@@ -104,9 +104,13 @@
 
   .offset-by-one-half.column,
   .offset-by-one-half.columns     { margin-left: 52%; }
-
 }
 
+.round-square {
+  width: 150px;
+  height: 150px;
+  border-radius: 15px;
+}
 
 /* Base Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
