@@ -12,11 +12,9 @@ from colorutils import Color
 
 # launch app with customer css
 app = dash.Dash(__name__)
-app.title = 'Foundation Shades Across the Globe'
+app.title = 'Foundation Shades Across the Globe' # app title
 shades = pd.read_csv("./data/processed/shades_processed.csv", encoding="utf-8-sig") # read processed data
-shades['hex'] = '#' + shades['hex'] # add # symbol for displaying color
-df = px.data.tips()  # delete this next week
-unique_countries = shades.country.unique()
+unique_countries = shades.country.unique() # reusable variable
 server = app.server
 
 """
@@ -134,7 +132,8 @@ app.layout = html.Div([
                         id='slider_value_brightness',
                         min=20, max=100, step=1,
                         value=70,
-                        marks={ 20: '20%', 60: '60%', 100: '100%'}
+                        marks={0: '0%', 20: '20%', 40: '40%', 
+                               60: '60%', 80: '80%', 100: '100%'}
                     )
                 ],
                 className="three columns"
@@ -162,7 +161,7 @@ app.layout = html.Div([
         [
             html.Div(
                 [
-                    html.H1(id='match_1'),
+                    html.H1(id='match_1', className='round-square'),
                     html.P(id='match_1_color'),
                     html.P(id='match_1_text')
                 ], 
@@ -170,7 +169,7 @@ app.layout = html.Div([
             ),
             html.Div(
                 [
-                    html.H1(id='match_2'),
+                    html.H1(id='match_2', className='round-square'),
                     html.P(id='match_2_color'),
                     html.P(id='match_2_text')
                 ], 
@@ -178,7 +177,7 @@ app.layout = html.Div([
             ),
             html.Div(
                 [
-                    html.H1(id='match_3'),
+                    html.H1(id='match_3', className='round-square'),
                     html.P(id='match_3_color'),
                     html.P(id='match_3_text')
                 ], 
@@ -186,7 +185,7 @@ app.layout = html.Div([
             ),
             html.Div(
                 [
-                    html.H1(id='match_4'),
+                    html.H1(id='match_4', className='round-square'),
                     html.P(id='match_4_color'),
                     html.P(id='match_4_text')
                 ], 
@@ -194,7 +193,7 @@ app.layout = html.Div([
             ),
             html.Div(
                 [
-                    html.H1(id='match_5'),
+                    html.H1(id='match_5', className='round-square'),
                     html.P(id='match_5_color'),
                     html.P(id='match_5_text')
                 ], 
@@ -257,7 +256,7 @@ def update_histogram(value):
     Input('slider_saturation', 'value'),
     Input('slider_value_brightness', 'value'))
 def display_user_HSV_option(H, S, V):
-    """Display the user-selected HSV value as a str.
+    """ Display the user selection with HTML paragraph and div
 
     Parameters
     ----------
@@ -270,8 +269,9 @@ def display_user_HSV_option(H, S, V):
 
     Returns
     -------
-    str
-        Output string displaying user's choice of HSV.
+    list
+        Output string displaying user's choice of HSV and the CSS style
+        object for the rectangle shape to update the CSS color.
     """
     # output string for displaying user choice
     hex_color = Color(hsv=(H, S/100, V/100)).hex
@@ -313,6 +313,24 @@ def combine_color_country_results(row):
     Input('slider_saturation', 'value'),
     Input('slider_value_brightness', 'value'))
 def display_similar_HSV_option(H, S, V):
+    """
+    Display the top 5 matched colors with corresponding foundation product info
+
+    Parameters
+    ----------
+    H : int
+        Hue value selected by user via slider component.
+    S : int
+        Saturation value selected by user via slider component.
+    V : int
+        Value/Brightness value selected by user via slider component.
+
+    Returns
+    -------
+    list
+        a list of 5 strings consist of colors and country name plus 5 strings consist
+        of brands and product names 
+    """
     # find matching color and output string for displaying user choice
     user_color = np.array([H, S, V])
     top_5_matches = shades.apply(lambda row : distance(row[["H", "S", "V"]], user_color), axis = 1).sort_values().index[:5]
@@ -332,18 +350,30 @@ def display_similar_HSV_option(H, S, V):
     Input('slider_saturation', 'value'),
     Input('slider_value_brightness', 'value'))
 def display_similar_colors(H, S, V):
+    """
+    Display the top 5 matched colors by updating their corresponding CSS styles
+
+    Parameters
+    ----------
+    H : int
+        Hue value selected by user via slider component.
+    S : int
+        Saturation value selected by user via slider component.
+    V : int
+        Value/Brightness value selected by user via slider component.
+
+    Returns
+    -------
+    list
+        a list of 5 dictionaries consist of CSS styles
+    """
     # find matching color and output string for displaying user choice
     user_color = np.array([H, S, V])
     top_5_matches = shades.apply(lambda row : distance(row[["H", "S", "V"]], 
                                               user_color), axis = 1).sort_values().index[:5]
     top_5_matches_colors = shades.iloc[top_5_matches.values, 2:6]
     most_similar_hex_colors = top_5_matches_colors["hex"].values.tolist()
-    displayed_colors = []
-    for similar_color in most_similar_hex_colors:
-        displayed_colors.append({'backgroundColor': similar_color, 
-                                 "height": "150px", 
-                                 "width": "150px",
-                                 "borderRadius": "15px"})
+    displayed_colors = [{'backgroundColor': similar_color} for similar_color in most_similar_hex_colors]
     return displayed_colors
 
 if __name__ == '__main__':
