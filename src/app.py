@@ -224,7 +224,10 @@ def country_filter(value):
     """
     if type(value) != list: value = [value]
     data_filtered = shades.loc[shades['country'].isin(value)]
-    fig = px.histogram(data_filtered, x="Lightness", color = "country", range_x=[0,100])
+    fig = px.histogram(data_filtered, x="Lightness", color = "country", range_x=[0,100], 
+    color_discrete_sequence=['#4C78A8', '#F58518', '#E45756', '#72B7B2']) 
+    fig.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)',}) 
+    fig.update_yaxes(gridcolor="lightgrey")
     return fig
 
 # update histogram best seller selection by brand
@@ -245,7 +248,11 @@ def update_histogram(value):
         A histogram displaying lightness distribution of brands for a particular country.
     """
     data = shades.query("country == @value").loc[:, ["brand", "Lightness"]]
-    fig = px.histogram(data, x="Lightness", range_x=[0,100], color="brand")
+    fig = px.histogram(data, x="Lightness", range_x=[0,100], color="brand", 
+    color_discrete_sequence=['#54A24B', '#EECA3B', '#B279A2', '#FF9DA6', '#9D755D', 
+                             '#BAB0AC','#4C78A8', '#F58518', '#E45756', '#72B7B2'])
+    fig.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)',}) 
+    fig.update_yaxes(gridcolor="lightgrey")
     return fig
 
 # callback for displaying user selection
